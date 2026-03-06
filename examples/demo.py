@@ -12,6 +12,8 @@ log.add_handler(ConsoleHandler())
 # log.add_handler(FileHandler("app.log"))
 
 log.info("Custom format working")
+log.warning("Low memory warning")
+log.warning("Low memory warning")
 # try:
 #     x=10/0
 # except Exception as e:

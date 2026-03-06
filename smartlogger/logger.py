@@ -1,12 +1,14 @@
 import traceback
 from .formatter import Formatter
 from .handlers import ConsoleHandler, FileHandler
-from .levels import INFO, ERROR
+from .levels import INFO, ERROR, WARNING
 class Logger:
     def __init__(self,level=INFO,formatter=None):
         self.level = level
         self.formatter =formatter or Formatter()
         self.handlers = []
+    def warning(self, message):
+        self.log(WARNING, message)
     def add_handler(self, handler):
         self.handlers.append(handler)
     def log(self, level, message):
