@@ -6,10 +6,11 @@ A lightweight modular logging framework built in Python.
 
 ## Features
 - Modular logging architecture
+- **Colorized console output** (automatic based on log level)
 - Multiple log levels (DEBUG, INFO, WARNING, ERROR)
-- Console and file logging
+- **JSON Formatter** for structured logging
+- Log rotation by size (`FileHandler`) and **daily time rotation** (`TimeRotatingFileHandler`)
 - Custom log format templates
-- Log rotation support
 - Exception logging
 
 ## Installation
@@ -19,18 +20,36 @@ pip install -e .
 ## Usage
 
 ```python
-'''
 from smartlogger import Logger
-from smartlogger.handlers import ConsoleHandler
-from smartlogger.formatter import Formatter
-formatter = Formatter("[{time}] [{level}] {message}")
-log = Logger(formatter=formatter)
-log.add_handler(ConsoleHandler())
-log.info("Application started")
-'''
+from smartlogger.handlers import ConsoleHandler, TimeRotatingFileHandler
+from smartlogger.formatter import Formatter, JSONFormatter
+from smartlogger.levels import DEBUG
 
-## Example Output
-[2026-03-07 12:00:01] [INFO] Application started 
+# Basic Colorized Console Logging
+formatter = Formatter("[{time}] [{level}] {message}")
+log = Logger(level=DEBUG, formatter=formatter)
+log.add_handler(ConsoleHandler(color=True))
+log.debug("Tracing execution...")
+log.info("Application started")
+
+# Advanced: JSON Logging to a Daily Rotating File
+json_log = Logger(level=DEBUG, formatter=JSONFormatter())
+json_log.add_handler(TimeRotatingFileHandler("logs/app"))
+json_log.error("Database connection failed")
+```
+
+## Example Outputs
+
+### Console (Colorized automatically)
+```
+[2026-05-14 12:00:01] [DEBUG] Tracing execution...
+[2026-05-14 12:00:01] [INFO] Application started 
+```
+
+### JSON Log File (`logs/app-2026-05-14.log`)
+```json
+{"time": "2026-05-14 12:00:02", "level": "ERROR", "message": "Database connection failed"}
+```
 
 ## Architecture
 '''
