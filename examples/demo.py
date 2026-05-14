@@ -9,12 +9,12 @@ from smartlogger.formatter import Formatter
 formatter = Formatter(" [{level}] {message}")
 log = Logger(formatter=formatter)
 log.add_handler(ConsoleHandler())
-# log.add_handler(FileHandler("app.log"))
+log.add_handler(FileHandler("app.log"))
 
 log.info("Custom format working")
 log.warning("Low memory warning")
 log.warning("Low memory warning")
-# try:
-#     x=10/0
-# except Exception as e:
-#     log.exception(e)
+try:
+    x=10/0
+except Exception as e:
+    log.exception(e)
